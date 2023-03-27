@@ -1,33 +1,27 @@
 package com.example.TicTacToeBotApi.Model;
 
-import java.util.Random;
+import com.example.TicTacToeBotApi.Model.Board;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 public class Bot {
-    private Random random;
+    private Random random = new Random();
 
-    public Bot() {
-        random = new Random();
-    }
-
-    public int[] getNextMove(Board board) {
-        List<int[]> availableCells = board.getAvailableCells();
-
-        int[] move = minimax(board, board.getBotPlayer(), 0);
-
-        if (move[0] == -1 && move[1] == -1) {
-            move = availableCells.get(random.nextInt(availableCells.size()));
+    public int getMove(Board board) {
+        // Get a list of available cells
+        List<Integer> availableCells = new ArrayList<>();
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                if (board.getCells()[row][col] == '-') {
+                    availableCells.add(row * 3 + col);
+                }
+            }
         }
 
-        return move;
-    }
-
-    private int[] minimax(Board board, char player, int depth) {
-        List<int[]> availableCells = board.getAvailableCells();
-
-
-        int[] bestMove = new int[3];
-        int bestScore = (player == board.getBotPlayer()) ? Integer.MIN_VALUE : Integer.MAX_VALUE;
-
-        return bestMove;
+        // Choose a random available cell
+        int randomIndex = random.nextInt(availableCells.size());
+        return availableCells.get(randomIndex);
     }
 }
